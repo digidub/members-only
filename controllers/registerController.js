@@ -1,7 +1,24 @@
 const User = require('../models/user');
-const Message = require('../models/message');
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
-exports.get = async (req, res) => {
+exports.get = (req, res) => {
   res.render('register');
+};
+
+exports.post = async (req, res, next) => {
+  bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+    if (err) {
+      return next(err);
+    }
+    const user = new User({
+      username: req.body.username,
+      password: hashedPassword,
+    }).save((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect('/');
+    });
+  });
 };
