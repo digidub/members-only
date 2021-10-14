@@ -2,10 +2,19 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <h2>You need to login in order to access this content</h2>
+    <form action="/login" method="POST">
+      <label for="username">Username</label>
+      <input name="username" placeholder="username" type="text" />
+      <label for="password">Password</label>
+      <input name="password" type="password" />
+      <button>Log In</button>
+    </form>
   </body>
 </html>
