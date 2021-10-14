@@ -13,27 +13,17 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  firstName: {
+  username: {
     type: String,
     required: true,
-    minLength: 2,
-    maxLength: 50,
-  },
-  lastName: {
-    type: String,
-    required: true,
-    minLength: 2,
-    maxLength: 50,
+    minLength: 3,
+    maxLength: 24,
   },
   membershipStatus: {
     type: String,
     default: 'unconfirmed',
     enum: ['unconfirmed', 'confirmed'],
   },
-});
-
-UserSchema.virtual('name').get(() => {
-  return this.firstName + this.lastName;
 });
 
 module.exports = mongoose.model('User', UserSchema);
