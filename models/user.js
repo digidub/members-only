@@ -31,3 +31,9 @@ const UserSchema = new Schema({
     enum: ['unconfirmed', 'confirmed'],
   },
 });
+
+UserSchema.virtual('name').get(() => {
+  return this.firstName + this.lastName;
+});
+
+module.exports = mongoose.model('User', UserSchema);
