@@ -8,4 +8,8 @@ const MessageSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
+MessageSchema.virtual('url').get(() => {
+  return '/message/' + this._id;
+});
+
 module.exports = mongoose.model('Message', MessageSchema);
