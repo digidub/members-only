@@ -4,7 +4,7 @@ const registerController = require('../controllers/registerController');
 const memberAreaController = require('../controllers/memberAreaController');
 
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Members Only Club', user: req.user });
+  res.render('index', { title: 'Members Only Club' });
 });
 router.get('/register', registerController.get);
 router.post('/register', registerController.post);
