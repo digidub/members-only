@@ -1,8 +1,6 @@
 const User = require('../models/user');
 
 exports.get = async (req, res, next) => {
-  console.log(res.locals.currentUser);
-
   if (!res.locals.currentUser) {
     res.redirect('/');
     next();
@@ -13,4 +11,13 @@ exports.get = async (req, res, next) => {
   }
 };
 
-exports.post = async (req, res, next) => {};
+exports.post = async (req, res, next) => {
+  console.log(res.locals.currentUser);
+  if (req.body.password === 'LetMeIn') {
+    const verifyMember = await User.find({
+      username: res.locals.currentUser.username,
+    });
+    verifyMember.membershipStatus = 'confirmed';
+    res.redirect('/member-area');
+  }
+};
