@@ -4,6 +4,7 @@ const registerController = require('../controllers/registerController');
 const memberAreaController = require('../controllers/memberAreaController');
 
 router.get('/', function (req, res, next) {
+  if (res.locals.currentUser) res.redirect('/member-area');
   res.render('index', {
     title: 'Members Only Club',
     message: req.flash(),
