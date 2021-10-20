@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Private Message Board</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1>Messages</h1>
+    <dl>
+      <% messages.forEach(function(post,index){ %>
+      <dt><%= post.subject %></dt>
+      <dd><%= post.message %></dd>
+      <% }) %>
+    </dl>
+  </body>
+</html>
