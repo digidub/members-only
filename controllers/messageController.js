@@ -1,6 +1,13 @@
 const Message = require('../models/message');
 const { body, validationResult } = require('express-validator');
 
+exports.index = async function (req, res, next) {
+  const messages = await Message.find({}, 'subject message author')
+    .sort({ date: -1 })
+    .populate('subject message author');
+  res.render('message-list', messages);
+};
+
 exports.postMessageGet = async function (req, res, next) {
   res.render('message-post');
 };
