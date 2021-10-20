@@ -2,12 +2,10 @@ const Message = require('../models/message');
 const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
 
-exports.checkAuthorised = async function (req, res, next) {
-  console.log('test');
+exports.checkAuthorised = function (req, res, next) {
   if (!res.locals.currentUser) {
     res.redirect('/');
-  }
-  if (res.locals.currentUser.membershipStatus !== 'confirmed') {
+  } else if (res.locals.currentUser.membershipStatus !== 'confirmed') {
     res.render('member-area', { confirmed: false });
   }
   next();
@@ -24,25 +22,28 @@ exports.postMessageGet = async function (req, res, next) {
   res.render('message-post');
 };
 
-exports.postMessagePost = async function (req, res, next) {
+exports.postMessagePost = [
   body('subject', 'Subject must not be empty')
     .trim()
     .isLength({ min: 3 })
-    .escape();
-  body('message').trim().isLength({ min: 10 }).escape();
+    .escape(),
+  body('message').trim().isLength({ min: 10 }).escape(),
   async (req, res, next) => {
     const errors = validationResult(req);
 
     const message = new Message({
       subject: req.body.subject,
       message: req.body.message,
+      author: res.locals.currentUser._id,
     });
-
     if (!errors.isEmpty()) {
-      res.render('message-post', { subject, message });
+      res.render('message-post', {
+        subject: req.body.subject,
+        message: req.body.message,
+      });
     } else {
       await message.save();
       res.redirect('/messages');
     }
-  };
-};
+  },
+];
