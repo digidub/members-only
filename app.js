@@ -21,6 +21,8 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
+const flash = require('connect-flash');
+
 const app = express();
 
 // view engine setup
@@ -64,17 +66,18 @@ app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
-
 app.use(function (req, res, next) {
   res.locals.currentUser = req.user;
   next();
 });
+app.use(flash());
 
 app.post(
   '/login',
   passport.authenticate('local', {
     successRedirect: '/member-area',
-    failureRedirect: '/fail',
+    failureRedirect: '/',
+    failureFlash: true,
   })
 );
 

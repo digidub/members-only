@@ -4,7 +4,10 @@ const registerController = require('../controllers/registerController');
 const memberAreaController = require('../controllers/memberAreaController');
 
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Members Only Club' });
+  res.render('index', {
+    title: 'Members Only Club',
+    message: req.flash(),
+  });
 });
 router.get('/register', registerController.get);
 router.post('/register', registerController.post);
@@ -13,4 +16,5 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 router.get('/member-area', memberAreaController.get);
+router.post('/member-area', memberAreaController.post);
 module.exports = router;
