@@ -8,7 +8,10 @@
     <h1>Messages</h1>
     <dl>
       <% messages.forEach(function(post,index){ %>
-      <dt><%= post.subject %></dt>
+      <dt>
+        <b><%= post.subject %></b> posted by
+        <b><%= post.author.username %></b> at <b><%= post.timestamp %></b>
+      </dt>
       <dd><%= post.message %></dd>
       <% }) %>
     </dl>
