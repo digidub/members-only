@@ -1,5 +1,17 @@
 const Message = require('../models/message');
+const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
+
+exports.checkAuthorised = async function (req, res, next) {
+  console.log('test');
+  if (!res.locals.currentUser) {
+    res.redirect('/');
+  }
+  if (res.locals.currentUser.membershipStatus !== 'confirmed') {
+    res.render('member-area', { confirmed: false });
+  }
+  next();
+};
 
 exports.index = async function (req, res, next) {
   const messages = await Message.find({}, 'subject message author')
