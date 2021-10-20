@@ -14,7 +14,7 @@ exports.checkAuthorised = function (req, res, next) {
 exports.index = async function (req, res, next) {
   const messages = await Message.find({}, 'subject message author')
     .sort({ date: -1 })
-    .populate('subject message author');
+    .populate('subject message timestamp author');
   res.render('message-list', { messages });
 };
 
